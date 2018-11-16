@@ -1,0 +1,81 @@
+<databaseChangeLog xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                   http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+
+    <changeSet id="added_tests" author="timur">
+        <createTable tableName="tests">
+            <column name="testID" type="int unsigned" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false" unique="true"/>
+            </column>
+            <column name="test_name" type="varchar(70)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="level" type="tinyint unsigned">
+                <constraints nullable="false"/>
+            </column>
+            <column name="topic" type="varchar(70)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="tests_time" type="smallint(5)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="added_questions" author="timur">
+        <createTable tableName="questions">
+            <column name="questionID" type="int unsigned" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false" unique="true"/>
+            </column>
+            <column name="question" type="mediumtext">
+                <constraints nullable="false"/>
+            </column>
+            <column name="testID" type="int unsigned">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+
+    <changeSet id="added_answers" author="timur">
+        <createTable tableName="answers">
+            <column name="answerID" type="int unsigned" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false" unique="true"/>
+            </column>
+            <column name="answer" type="mediumtext">
+                <constraints nullable="false"/>
+            </column>
+            <column name="correct" type="boolean" defaultValue="false">
+                <constraints nullable="false"/>
+            </column>
+            <column name="questionID" type="int unsigned">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="link_tests_and_questions" author="timur">
+        <addForeignKeyConstraint constraintName="fk_tests"
+                                 baseTableName="questions" baseColumnNames="testID" referencedTableName="tests"
+                                 referencedColumnNames="testID" onDelete="CASCADE" onUpdate="CASCADE"/>
+    </changeSet>
+
+    <changeSet id="link_questions_and_answers" author="timur">
+        <addForeignKeyConstraint constraintName="questions_fk"
+                                 baseTableName="answers" baseColumnNames="questionID" referencedTableName="questions"
+                                 referencedColumnNames="questionID" onDelete="CASCADE" onUpdate="CASCADE"/>
+    </changeSet>
+
+    <changeSet id="link_users_and_result" author="timur">
+        <addForeignKeyConstraint constraintName="users_fk"
+                                 baseTableName="results" baseColumnNames="userID" referencedTableName="users"
+                                 referencedColumnNames="userID" onDelete="CASCADE" onUpdate="CASCADE"/>
+    </changeSet>
+
+
+    <changeSet id="tag-1.1" author="timur">
+        <tagDatabase tag="1.1"/>
+    </changeSet>
+
+</databaseChangeLog>

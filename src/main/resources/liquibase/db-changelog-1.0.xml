@@ -1,0 +1,59 @@
+<databaseChangeLog xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                   http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+
+    <changeSet id="added_users" author="timur">
+        <createTable tableName="users">
+            <column name="userID" type="int unsigned" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false" unique="true"/>
+            </column>
+            <column name="login" type="varchar(25)">
+                <constraints nullable="false" unique="true"/>
+            </column>
+            <column name="email" type="varchar(30)">
+                <constraints unique="true"/>
+            </column>
+            <column name="password" type="varchar(60)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="user_name" type="varchar(70)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="ban" type="boolean" defaultValue="false">
+                <constraints nullable="false"/>
+            </column>
+            <column name="age" type="tinyint unsigned">
+            </column>
+            <column name="role" type="varchar(30)" defaultValue="user">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+
+    <changeSet id="added_results" author="timur">
+        <createTable tableName="results">
+            <column name="resultID" type="int" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false" unique="true"/>
+            </column>
+            <column name="userID" type="int unsigned">
+                <constraints nullable="false"/>
+            </column>
+            <column name="testID" type="int unsigned">
+                <constraints nullable="false"/>
+            </column>
+            <column name="passed" type="boolean" defaultValue="false">
+                <constraints nullable="false"/>
+            </column>
+            <column name="points" type="tinyint unsigned">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="tag-1.0" author="timur">
+        <tagDatabase tag="1.0"/>
+    </changeSet>
+
+</databaseChangeLog>
